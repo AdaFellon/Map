@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Карта памяти</title>
 
   <link rel="stylesheet"
@@ -10,7 +11,9 @@
 </head>
 <body>
 
-<div class="sidebar">
+<button class="menu-toggle" id="menuToggle">☰ Меню</button>
+
+<div class="sidebar" id="sidebar">
 
   <h1>Карта памяти</h1>
   <p class="subtitle">
@@ -34,15 +37,12 @@
     <div class="legend-item">
       <span class="dot massacre"></span> Массовый расстрел
     </div>
-
     <div class="legend-item">
       <span class="dot burned"></span> Сожжённый населённый пункт
     </div>
-
     <div class="legend-item">
       <span class="dot camp"></span> Лагерь
     </div>
-
     <div class="legend-item">
       <span class="dot deport"></span> Депортация
     </div>
