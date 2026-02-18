@@ -3,202 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Карта памяти: преступления на территории СССР</title>
+<title>Карта памяти | Великая Отечественная война</title>
 
-<!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css">
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
-
-header {
-    background: #8b0000;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-section {
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-#map {
-    height: 600px;
-    margin: 20px auto;
-    max-width: 1000px;
-    border: 2px solid #444;
-}
-
-.filters {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-button {
-    padding: 8px 15px;
-    margin: 5px;
-    border: none;
-    background: #444;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #8b0000;
-}
-
-.legend {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.legend span {
-    display: inline-block;
-    margin: 5px 10px;
-}
-</style>
 </head>
 <body>
 
 <header>
     <h1>Карта памяти</h1>
-    <p>Преступления на территории СССР в годы Великой Отечественной войны</p>
+    <p>Преступления на территории СССР в годы Великой Отечественной войны (1941–1944)</p>
 </header>
 
-<section>
-    <h2>Проблема</h2>
-    <p>
-        В годы Великой Отечественной войны на территории СССР были совершены массовые преступления
-        против мирного населения. Тысячи населённых пунктов пострадали,
-        миллионы людей стали жертвами нацистской оккупации.
-        Со временем память о трагических событиях постепенно утрачивается.
-    </p>
+<div class="container">
 
-    <h2>Идея проекта</h2>
-    <p>
-        «Карта памяти» — это интерактивный цифровой ресурс,
-        объединяющий архивные данные о преступлениях нацистов
-        и их пособников и визуализирующий их на карте.
-        Каждый маркер — конкретное событие и конкретные судьбы людей.
-    </p>
+    <aside class="sidebar">
+        <h2>Фильтры</h2>
 
-    <div class="filters">
-        <strong>Фильтр по годам:</strong><br>
-        <button onclick="filterYear('all')">Все</button>
-        <button onclick="filterYear('1941')">1941</button>
-        <button onclick="filterYear('1942')">1942</button>
-        <button onclick="filterYear('1943')">1943</button>
-        <button onclick="filterYear('1944')">1944</button>
-    </div>
+        <label>Год:</label>
+        <select id="yearFilter">
+            <option value="all">Все годы</option>
+            <option value="1941">1941</option>
+            <option value="1942">1942</option>
+            <option value="1943">1943</option>
+            <option value="1944">1944</option>
+        </select>
 
-    <div id="map"></div>
+        <label>Тип преступления:</label>
+        <select id="typeFilter">
+            <option value="all">Все типы</option>
+            <option value="Расстрел">Массовые расстрелы</option>
+            <option value="Уничтожение">Уничтожение населённых пунктов</option>
+            <option value="Лагерь">Лагеря и депортации</option>
+        </select>
 
-    <div class="legend">
-        <strong>Типы преступлений:</strong><br>
-        <span style="color:red;">● Массовые расстрелы</span>
-        <span style="color:blue;">● Уничтожение населённых пунктов</span>
-        <span style="color:green;">● Лагеря и депортации</span>
-    </div>
+        <button id="playTimeline">▶ Авто-режим по годам</button>
 
-    <h2>Практическая значимость</h2>
-    <ul>
-        <li>Использование в школах на уроках истории</li>
-        <li>Применение в музеях и мемориальных центрах</li>
-        <li>Помощь в исследовательской и поисковой работе</li>
-    </ul>
+        <div class="stats">
+            <h3>Статистика</h3>
+            <p id="eventCount">Событий: 0</p>
+        </div>
+    </aside>
 
-    <h2>Уникальность</h2>
-    <p>
-        В отличие от статических архивов, карта создаёт пространственное понимание трагедии,
-        показывая реальные географические точки событий.
-    </p>
+    <main>
+        <div id="map"></div>
+    </main>
 
-    <h2>Заключение</h2>
-    <p>
-        «Карта памяти» — шаг к сохранению правды о событиях войны.
-        Память должна быть не только сохранена, но и доступна каждому.
-    </p>
-</section>
+</div>
 
-<!-- Leaflet JS -->
+<footer>
+    <p>Проект создан в образовательных целях. Источники: архивные материалы и открытые исторические данные.</p>
+</footer>
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-// Создание карты
-var map = L.map('map').setView([55.75, 37.6], 5);
-
-// Подложка
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-}).addTo(map);
-
-// Данные событий
-var events = [
-    {
-        year: "1941",
-        coords: [50.45, 30.52],
-        color: "red",
-        title: "Бабий Яр",
-        description: "Массовый расстрел мирного населения. Более 33 000 жертв.",
-        type: "Массовый расстрел"
-    },
-    {
-        year: "1943",
-        coords: [53.59, 27.55],
-        color: "blue",
-        title: "Хатынь",
-        description: "Уничтожение деревни вместе с жителями.",
-        type: "Уничтожение населённого пункта"
-    },
-    {
-        year: "1942",
-        coords: [56.95, 24.1],
-        color: "green",
-        title: "Саласпилс",
-        description: "Концентрационный лагерь. Гибель тысяч узников.",
-        type: "Лагерь"
-    }
-];
-
-var markers = [];
-
-// Добавление маркеров
-events.forEach(function(event) {
-    var marker = L.circleMarker(event.coords, {
-        radius: 8,
-        color: event.color,
-        fillOpacity: 0.8
-    })
-    .bindPopup(
-        "<b>" + event.title + "</b><br>" +
-        "<b>Год:</b> " + event.year + "<br>" +
-        "<b>Тип:</b> " + event.type + "<br>" +
-        "<b>Описание:</b> " + event.description +
-        "<br><a href='#' target='_blank'>Архивные документы</a>"
-    )
-    .addTo(map);
-
-    marker.year = event.year;
-    markers.push(marker);
-});
-
-// Фильтр по годам
-function filterYear(year) {
-    markers.forEach(function(marker) {
-        if (year === "all" || marker.year === year) {
-            marker.addTo(map);
-        } else {
-            map.removeLayer(marker);
-        }
-    });
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
