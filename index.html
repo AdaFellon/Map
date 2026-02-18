@@ -2,37 +2,55 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Карта памяти — преступления на территории СССР</title>
+  <title>Карта памяти</title>
 
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div class="top-panel">
-  <h1>Карта памяти</h1>
-  <p>Преступления на территории СССР (1941–1944)</p>
+<div class="sidebar">
 
-  <div class="filters">
-    <button data-year="all" class="active">Все</button>
-    <button data-year="1941">1941</button>
-    <button data-year="1942">1942</button>
-    <button data-year="1943">1943</button>
-    <button data-year="1944">1944</button>
+  <h1>Карта памяти</h1>
+  <p class="subtitle">
+    Преступления на территории СССР (1941–1944)
+  </p>
+
+  <div class="section">
+    <h3>Годы</h3>
+    <div class="filters">
+      <button data-year="all" class="active">Все</button>
+      <button data-year="1941">1941</button>
+      <button data-year="1942">1942</button>
+      <button data-year="1943">1943</button>
+      <button data-year="1944">1944</button>
+    </div>
   </div>
+
+  <div class="section">
+    <h3>Типы преступлений</h3>
+
+    <div class="legend-item">
+      <span class="dot massacre"></span> Массовый расстрел
+    </div>
+
+    <div class="legend-item">
+      <span class="dot burned"></span> Сожжённый населённый пункт
+    </div>
+
+    <div class="legend-item">
+      <span class="dot camp"></span> Лагерь
+    </div>
+
+    <div class="legend-item">
+      <span class="dot deport"></span> Депортация
+    </div>
+  </div>
+
 </div>
 
 <div id="map"></div>
-
-<div class="side-info">
-  <h2>О проекте</h2>
-  <p>
-    Интерактивная карта преступлений нацистской оккупации.
-    Каждый маркер — конкретное событие и судьбы людей.
-  </p>
-</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="main.js"></script>
