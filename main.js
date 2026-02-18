@@ -3,14 +3,13 @@ const map = L.map('map', {
   attributionControl: false
 }).setView([58, 60], 4);
 
-// Светлая карта
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   { maxZoom: 18 }
 ).addTo(map);
 
 
-// ===== Границы СССР =====
+// ===== ГРАНИЦЫ СССР =====
 
 fetch('data/ussr_1945.geojson')
   .then(res => res.json())
@@ -30,23 +29,18 @@ fetch('data/ussr_1945.geojson')
   });
 
 
-// ===== Данные преступлений =====
+// ===== ДАННЫЕ =====
 
 let crimeLayer = L.layerGroup().addTo(map);
 let crimeData = [];
 
 function getColor(type) {
   switch(type) {
-    case "Массовый расстрел":
-      return "#7f1d1d";
-    case "Сожжённый населённый пункт":
-      return "#b45309";
-    case "Лагерь":
-      return "#1e3a8a";
-    case "Депортация":
-      return "#374151";
-    default:
-      return "#000000";
+    case "Массовый расстрел": return "#7f1d1d";
+    case "Сожжённый населённый пункт": return "#b45309";
+    case "Лагерь": return "#1e3a8a";
+    case "Депортация": return "#374151";
+    default: return "#000000";
   }
 }
 
@@ -106,4 +100,14 @@ document.querySelectorAll('.filters button').forEach(btn => {
     renderMarkers(btn.dataset.year);
   });
 
+});
+
+
+// ===== МОБИЛЬНОЕ МЕНЮ =====
+
+const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
 });
