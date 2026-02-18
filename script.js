@@ -7,7 +7,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let markers = [];
 let data = [];
 
-fetch('data.json')
+fetch('./data.json')
     .then(res => res.json())
     .then(json => {
         data = json;
