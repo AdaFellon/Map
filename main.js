@@ -1,30 +1,22 @@
-// ===============================
-// ИНИЦИАЛИЗАЦИЯ КАРТЫ
-// ===============================
-
 const map = L.map('map', {
   zoomControl: true,
   attributionControl: false
 }).setView([58, 60], 4);
 
-// Светлая подложка (академичный стиль)
+// Светлая карта
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   { maxZoom: 18 }
 ).addTo(map);
 
 
-// ===============================
-// ГРАНИЦЫ СССР 1945
-// ===============================
-
-let ussrLayer = null;
+// ===== Границы СССР =====
 
 fetch('data/ussr_1945.geojson')
   .then(res => res.json())
   .then(data => {
 
-    ussrLayer = L.geoJSON(data, {
+    const ussrLayer = L.geoJSON(data, {
       style: {
         color: "#111",
         weight: 2,
@@ -35,13 +27,10 @@ fetch('data/ussr_1945.geojson')
 
     map.fitBounds(ussrLayer.getBounds());
 
-  })
-  .catch(err => console.error("Ошибка загрузки границ:", err));
+  });
 
 
-// ===============================
-// ДАННЫЕ ПРЕСТУПЛЕНИЙ
-// ===============================
+// ===== Данные преступлений =====
 
 let crimeLayer = L.layerGroup().addTo(map);
 let crimeData = [];
@@ -66,13 +55,8 @@ fetch('data/crimes.json')
   .then(data => {
     crimeData = data;
     renderMarkers("all");
-  })
-  .catch(err => console.error("Ошибка загрузки данных:", err));
+  });
 
-
-// ===============================
-// ОТРИСОВКА МАРКЕРОВ
-// ===============================
 
 function renderMarkers(year) {
 
@@ -94,14 +78,12 @@ function renderMarkers(year) {
     );
 
     marker.bindPopup(`
-      <div style="font-family: Georgia, serif; line-height: 1.4;">
-        <strong>${event.place}</strong><br><br>
-        <strong>Дата:</strong> ${event.date}<br>
-        <strong>Тип:</strong> ${event.type}<br>
-        <strong>Число жертв:</strong> ${event.victims}<br><br>
-        ${event.description}<br><br>
-        <a href="${event.source}" target="_blank">Архивные материалы</a>
-      </div>
+      <strong>${event.place}</strong><br><br>
+      <strong>Дата:</strong> ${event.date}<br>
+      <strong>Тип:</strong> ${event.type}<br>
+      <strong>Жертвы:</strong> ${event.victims}<br><br>
+      ${event.description}<br><br>
+      <a href="${event.source}" target="_blank">Архивные материалы</a>
     `);
 
     crimeLayer.addLayer(marker);
@@ -110,9 +92,7 @@ function renderMarkers(year) {
 }
 
 
-// ===============================
-// ФИЛЬТР ПО ГОДАМ
-// ===============================
+// ===== ФИЛЬТР =====
 
 document.querySelectorAll('.filters button').forEach(btn => {
 
@@ -123,37 +103,7 @@ document.querySelectorAll('.filters button').forEach(btn => {
 
     btn.classList.add('active');
 
-    const selectedYear = btn.dataset.year;
-    renderMarkers(selectedYear);
+    renderMarkers(btn.dataset.year);
   });
 
 });
-
-
-// ===============================
-// ЛЕГЕНДА
-// ===============================
-
-const legend = L.control({ position: "bottomleft" });
-
-legend.onAdd = function () {
-
-  const div = L.DomUtil.create("div", "info legend");
-  div.style.background = "white";
-  div.style.padding = "12px";
-  div.style.border = "1px solid #ccc";
-  div.style.fontFamily = "Georgia, serif";
-  div.style.fontSize = "13px";
-
-  div.innerHTML = `
-    <strong>Типы преступлений</strong><br><br>
-    <span style="color:#7f1d1d;">●</span> Массовый расстрел<br>
-    <span style="color:#b45309;">●</span> Сожжённый населённый пункт<br>
-    <span style="color:#1e3a8a;">●</span> Лагерь<br>
-    <span style="color:#374151;">●</span> Депортация
-  `;
-
-  return div;
-};
-
-legend.addTo(map);
