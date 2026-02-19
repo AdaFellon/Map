@@ -1,67 +1,82 @@
-const map = L.map('map').setView([54, 30], 5);
+const map = L.map('map').setView([53.5, 27.5], 5);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+function getIcon(color) {
+    return L.divIcon({
+        className: '',
+        html: `<div style="background:${color};
+        width:18px;height:18px;border-radius:50%;
+        border:2px solid white;"></div>`,
+        iconSize:[18,18]
+    });
+}
 
 let markers = [];
 
-function getColor(type) {
-    switch(type) {
-        case "Концлагерь": return "red";
-        case "Дулаг": return "yellow";
-        case "Массовое убийство": return "black";
-        case "Детский лагерь": return "purple";
-        default: return "blue";
-    }
-}
+function createMarkers(filterYear="all") {
+    markers.forEach(m=>map.removeLayer(m));
+    markers=[];
 
-function createMarkers(yearFilter = "all") {
+    locations.forEach(loc=>{
+        if(filterYear!=="all" && !loc.years.includes(filterYear)) return;
 
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
-
-    locations.forEach(loc => {
-
-        if (yearFilter !== "all" && loc.year !== yearFilter) return;
-
-        const marker = L.circleMarker([loc.lat, loc.lng], {
-            radius: 8,
-            color: getColor(loc.type),
-            fillColor: getColor(loc.type),
-            fillOpacity: 0.9
+        const marker=L.marker([loc.lat,loc.lng],{
+            icon:getIcon(loc.color)
         }).addTo(map);
 
         marker.bindPopup(`
-            <b>${loc.name}</b><br>
-            ${loc.place}<br>
-            ${loc.year}<br><br>
-            <button onclick="openModal('${loc.name}', '${loc.image}', \`${loc.description}\`)">
-            Узнать больше
-            </button>
+            <b>${loc.name}</b><br><br>
+            📅 ${loc.date}<br>
+            📍 ${loc.place}<br>
+            ⚖ ${loc.type}<br>
+            👥 ${loc.victims}<br>
+            📝 ${loc.description}<br>
+            <a href="${loc.archive}" target="_blank">Архив</a><br><br>
+            <button onclick="openModal(${loc.id})"
+            style="background:#b30000;color:white;border:none;
+            padding:6px 10px;border-radius:5px;">
+            Узнать больше</button>
         `);
 
         markers.push(marker);
     });
 }
 
-function filterYear(year) {
-    createMarkers(year);
+function openModal(id){
+    const loc=locations.find(l=>l.id===id);
+
+    document.getElementById("modal-body").innerHTML=`
+        <h2>${loc.name}</h2>
+        <img src="${loc.image}">
+        <p><b>Дата:</b> ${loc.date}</p>
+        <p><b>Место:</b> ${loc.place}</p>
+        <p><b>Тип:</b> ${loc.type}</p>
+        <p><b>Жертвы:</b> ${loc.victims}</p>
+        <p>${loc.more}</p>
+        <p><a href="${loc.archive}" target="_blank">Архивные документы</a></p>
+    `;
+
+    document.getElementById("modal").style.display="block";
 }
 
-createMarkers();
+document.getElementById("close").onclick=()=>{
+    document.getElementById("modal").style.display="none";
+};
 
+window.onclick=(e)=>{
+    if(e.target==document.getElementById("modal")){
+        document.getElementById("modal").style.display="none";
+    }
+};
 
-// Модальное окно
-const modal = document.getElementById("modal");
-const closeBtn = document.getElementById("close");
+function filterByYear(year){ createMarkers(year); }
+function showAll(){ createMarkers("all"); }
 
-function openModal(title, image, description) {
-    modal.style.display = "block";
-    document.getElementById("modal-title").innerText = title;
-    document.getElementById("modal-image").src = image;
-    document.getElementById("modal-description").innerText = description;
-}
+createMarkers("all");
 
-closeBtn.onclick = () => modal.style.display = "none";
-window.onclick = e => { if(e.target == modal) modal.style.display = "none"; };
+/* МОБИЛЬНОЕ МЕНЮ */
+document.getElementById("menu-toggle").onclick=function(){
+    document.getElementById("sidebar").classList.toggle("active");
+};
+
