@@ -1,119 +1,131 @@
 body {
   margin: 0;
   display: flex;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f6f1eb; /* молочный */
+  font-family: Arial, sans-serif;
+  background: #f6f1eb;
 }
 
-/* ===== БОКОВОЕ МЕНЮ ===== */
-
-#sidebar {
-  width: 270px;
-  background: #ffffff;
-  padding: 25px;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-  border-right: 3px solid #b30000;
-}
-
-#sidebar h2 {
-  margin-top: 0;
-  color: #b30000;
-}
-
-#sidebar h3 {
-  margin-top: 25px;
-  color: #7a0000;
-}
-
-/* ===== КНОПКИ ===== */
-
-#sidebar button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
+/* КНОПКА МЕНЮ (МОБИЛЬНАЯ) */
+#menu-toggle {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
   background: #b30000;
   color: white;
   border: none;
+  padding: 10px 14px;
+  font-size: 20px;
   border-radius: 6px;
+}
+
+/* БОКОВОЕ МЕНЮ */
+#sidebar {
+  width: 260px;
+  background: white;
+  padding: 20px;
+  border-right: 3px solid #b30000;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+#sidebar h2, #sidebar h3 {
+  color: #b30000;
+}
+
+#sidebar button {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #b30000;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.2s ease;
 }
 
 #sidebar button:hover {
   background: #8f0000;
 }
 
-/* ===== ЛЕГЕНДА ===== */
-
-.legend {
-  margin-top: 10px;
-}
-
+/* ЛЕГЕНДА */
 .legend div {
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 6px;
 }
 
-.legend .dot {
+.dot {
   height: 14px;
   width: 14px;
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 6px;
   border-radius: 50%;
-  border: 1px solid #333;
 }
 
-.red { background: #b30000; }
-.yellow { background: #f4c542; }
-.black { background: #222; }
-.purple { background: #7b3fa0; }
+.red { background:#b30000; }
+.yellow { background:#f4c542; }
+.black { background:#222; }
+.purple { background:#7b3fa0; }
 
-/* ===== КАРТА ===== */
-
+/* КАРТА */
 #map {
   flex: 1;
   height: 100vh;
 }
 
-/* ===== МОДАЛЬНОЕ ОКНО ===== */
-
+/* МОДАЛЬНОЕ ОКНО */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  z-index: 1200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.6);
 }
 
 .modal-content {
   background: #fffdf9;
   margin: 5% auto;
-  padding: 25px;
-  width: 70%;
-  max-width: 750px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-}
-
-.modal-content h2 {
-  color: #b30000;
+  padding: 20px;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 10px;
 }
 
 .modal-content img {
   width: 100%;
-  margin: 15px 0;
-  border-radius: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
 }
 
 #close {
   float: right;
+  font-size: 26px;
   cursor: pointer;
-  font-size: 28px;
   color: #b30000;
 }
 
-#close:hover {
-  color: #7a0000;
+/* ===== АДАПТИВ ===== */
+@media (max-width: 768px) {
+
+  body {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    position: fixed;
+    height: 100%;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  #sidebar.active {
+    transform: translateX(0);
+  }
+
+  #menu-toggle {
+    display: block;
+  }
 }
