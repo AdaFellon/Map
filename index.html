@@ -2,45 +2,42 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Карта лагерей и мест трагедий</title>
+<title>Карта памяти</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
+
 <body>
 
+<button id="menu-toggle">☰</button>
+
 <div id="sidebar">
-  <h2>Фильтр по годам</h2>
+    <h2>Фильтр по годам</h2>
 
-  <button onclick="filterYear('all')">Все годы</button>
-  <button onclick="filterYear('1941')">1941</button>
-  <button onclick="filterYear('1942')">1942</button>
-  <button onclick="filterYear('1943')">1943</button>
-  <button onclick="filterYear('1944')">1944</button>
+    <button onclick="showAll()">Все годы</button>
+    <button onclick="filterByYear('1941')">1941</button>
+    <button onclick="filterByYear('1942')">1942</button>
+    <button onclick="filterByYear('1943')">1943</button>
+    <button onclick="filterByYear('1944')">1944</button>
 
-  <hr>
-
-  <h3>Типы объектов</h3>
-
-  <div class="legend">
-    <div><span class="dot red"></span> Концлагерь</div>
-    <div><span class="dot yellow"></span> Дулаг / сборный пункт</div>
-    <div><span class="dot black"></span> Массовое убийство</div>
-    <div><span class="dot purple"></span> Детский лагерь</div>
-  </div>
+    <h3>Обозначения</h3>
+    <div class="legend">
+        <div><span class="dot red"></span> Концлагерь</div>
+        <div><span class="dot yellow"></span> Лагерь военнопленных</div>
+        <div><span class="dot black"></span> Массовые убийства</div>
+        <div><span class="dot purple"></span> Детский лагерь</div>
+    </div>
 </div>
 
 <div id="map"></div>
 
-<!-- Модальное окно -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span id="close">&times;</span>
-    <h2 id="modal-title"></h2>
-    <img id="modal-image">
-    <p id="modal-description"></p>
+    <div id="modal-body"></div>
   </div>
 </div>
 
