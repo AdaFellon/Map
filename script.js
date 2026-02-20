@@ -9,17 +9,6 @@ L.imageOverlay(
     ussrBounds,
     { opacity: 0.75 }
 ).addTo(map);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-function getIcon(color) {
-    return L.divIcon({
-        className: '',
-        html: `<div style="background:${color};
-        width:18px;height:18px;border-radius:50%;
-        border:2px solid white;"></div>`,
-        iconSize:[18,18]
-    });
-}
 
 let markers = [];
 
