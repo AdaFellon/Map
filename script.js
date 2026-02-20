@@ -1,25 +1,13 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
-// ==============================
-// ГРАНИЦА СССР 1940 (SVG Overlay)
-// ==============================
-
-// центр карты
-map.setView([60, 95], 4);
-
-// точные границы СССР 1940 для наложения SVG
 const ussrBounds = [
-    [37.0, 18.0],   // юго-запад
-    [82.5, 193.0]   // северо-восток
+    [37.0, 18.0],
+    [82.5, 193.0]
 ];
 
-// добавление SVG
 L.imageOverlay(
     "images/ussr1940.svg",
     ussrBounds,
-    {
-        opacity: 0.8,
-        interactive: false
-    }
+    { opacity: 0.75 }
 ).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
