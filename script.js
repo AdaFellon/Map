@@ -1,5 +1,13 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
+const svgBounds = [
+    [35.0, 18.0],
+    [82.0, 190.0]
+];
 
+L.imageOverlay("images/ussr_border.svg", svgBounds, {
+    opacity: 0.6,
+    interactive: false
+}).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 function getIcon(color) {
