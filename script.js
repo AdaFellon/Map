@@ -1,6 +1,6 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
 const svgBounds = [
-    [35.0, 18.0],
+    [28.0, 18.0],
     [82.0, 190.0]
 ];
 
