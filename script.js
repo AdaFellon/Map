@@ -1,16 +1,13 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
-fetch("ussr_1940.geojson")
-  .then(response => response.json())
-  .then(data => {
-    L.geoJSON(data, {
-      style: {
-        color: "#b30000",
-        weight: 2,
-        fillColor: "#ffffff",
-        fillOpacity: 0.05
-      }
-    }).addTo(map);
-  });
+const svgBounds = [
+    [30, 10],   // юго-запад (ниже и левее)
+    [85, 200]   // северо-восток (выше и правее)
+];
+
+L.imageOverlay("images/ussr_border.svg", svgBounds, {
+    opacity: 0.75,
+    interactive: false
+}).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 function getIcon(color) {
