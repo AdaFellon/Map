@@ -1,12 +1,11 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
-// Граница СССР (точная подгонка под сайт)
 const ussrBounds = [
-    [33.5, 14],   // юго-запад
-    [83.5, 192]   // северо-восток
+    [25.0, -30.0],  // юго-запад
+    [90.0, 210.0]   // северо-восток
 ];
 
 L.imageOverlay("images/ussr_border.svg", ussrBounds, {
-    opacity: 0.72,
+    opacity: 0.6,
     interactive: false
 }).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
