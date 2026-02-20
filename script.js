@@ -1,6 +1,11 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
+const map = L.map('map', {
+    attributionControl: false
+});
 let markers = [];
-
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 function createMarkers(filterYear="all") {
     markers.forEach(m=>map.removeLayer(m));
     markers=[];
@@ -67,3 +72,6 @@ document.getElementById("menu-toggle").onclick=function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
 
+L.control.attribution({
+    position: 'bottomright'
+}).addTo(map).addAttribution('&copy; OpenStreetMap contributors');
