@@ -1,7 +1,7 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
 const svgBounds = [
-    [28.0, 18.0],
-    [82.0, 190.0]
+    [34.5, 18.5],   // юго-запад
+    [82.5, 191.5]   // северо-восток
 ];
 
 L.imageOverlay("images/ussr_border.svg", svgBounds, {
