@@ -7,6 +7,24 @@ let markers = [];
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
+function getIcon(color) {
+    return L.divIcon({
+        className: '',
+        html: `
+            <div style="
+                background:${color};
+                width:16px;
+                height:16px;
+                border-radius:50%;
+                border:2px solid white;
+                box-shadow:0 0 4px rgba(0,0,0,0.5);
+            "></div>
+        `,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -8]
+    });
+}
 function createMarkers(filterYear="all") {
     markers.forEach(m=>map.removeLayer(m));
     markers=[];
