@@ -1,8 +1,9 @@
-const map = L.map('map').setView([53.5, 27.5], 5);
 const map = L.map('map', {
     attributionControl: false
-});
+}).setView([53.5, 27.5], 5);
+
 let markers = [];
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
