@@ -1,11 +1,11 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
 const svgBounds = [
-    [34.5, 18.5],   // юго-запад
-    [82.5, 191.5]   // северо-восток
+    [36, 20],   // юго-запад
+    [80, 180]   // северо-восток
 ];
 
 L.imageOverlay("images/ussr_border.svg", svgBounds, {
-    opacity: 0.6,
+    opacity: 0.7,
     interactive: false
 }).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
