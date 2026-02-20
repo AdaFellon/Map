@@ -1,6 +1,6 @@
 const map = L.map('map').setView([53.5, 27.5], 5);
 const ussrBounds = [
-    [37.0, 18.0],
+    [37.0, 180.0],
     [82.5, 193.0]
 ];
 
