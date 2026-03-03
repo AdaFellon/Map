@@ -29,29 +29,35 @@ function createMarkers(filterYear="all") {
     markers.forEach(m=>map.removeLayer(m));
     markers=[];
 
-    locations.forEach(loc=>{
-        if(filterYear!=="all" && !loc.years.includes(filterYear)) return;
+   locations.forEach(loc => {
+    if(filterYear !== "all" && !loc.years.includes(filterYear)) return;
 
-        const marker=L.marker([loc.lat,loc.lng],{
-            icon:getIcon(loc.color)
-        }).addTo(map);
+    const marker = L.marker([loc.lat, loc.lng], {
+        icon: getIcon(loc.color)
+    }).addTo(map);
 
-      marker.bindPopup(`
-  <div class="popup-scroll">
-      <b>${loc.name}</b><br><br>
-      📅 ${loc.date}<br>
-      📍 ${loc.place}<br>
-      ⚖ ${loc.type}<br>
-      👥 ${loc.victims}<br>
-      📝 ${loc.description}<br>
-      <a href="${loc.archive}" target="_blank">Архив</a><br><br>
-      <button onclick="openModal(${loc.id})"
-      style="background:#b30000;color:white;border:none;
-      padding:6px 10px;border-radius:5px;">
-      Узнать больше</button>
-  </div>
-`, {
-  maxWidth: 300
+    marker.bindPopup(`
+        <div class="popup-scroll">
+            <b>${loc.name}</b><br><br>
+            📅 ${loc.date}<br>
+            📍 ${loc.place}<br>
+            ⚖ ${loc.type}<br>
+            👥 ${loc.victims}<br>
+            📝 ${loc.description}<br>
+            <a href="${loc.archive}" target="_blank">Архив</a><br><br>
+            <button class="open-modal-btn" data-id="${loc.id}">
+                Узнать больше
+            </button>
+        </div>
+    `, { maxWidth: 300 });
+
+    // После добавления popup добавляем слушатель
+    marker.on('popupopen', function() {
+        const btn = document.querySelector('.open-modal-btn[data-id="'+loc.id+'"]');
+        if(btn) btn.onclick = () => openModal(loc.id);
+    });
+
+    markers.push(marker);
 });
 
 function openModal(id){
