@@ -93,4 +93,6 @@ createMarkers("all");
 document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
-
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: ''  // убираем надпись
+}).addTo(map);
