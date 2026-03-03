@@ -113,10 +113,3 @@ document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
 
-// Делегирование клика на кнопки "Узнать больше"
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('open-modal-btn')) {
-        const id = e.target.dataset.id;
-        openModal(id);
-    }
-});
