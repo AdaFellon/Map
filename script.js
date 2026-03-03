@@ -7,6 +7,7 @@ let markers = [];
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
+
 function getIcon(color) {
     return L.divIcon({
         className: '',
@@ -25,37 +26,41 @@ function getIcon(color) {
         popupAnchor: [0, -8]
     });
 }
+
 function createMarkers(filterYear="all") {
-    markers.forEach(m=>map.removeLayer(m));
-    markers=[];
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
 
-   locations.forEach(loc => {
-    if(filterYear !== "all" && !loc.years.includes(filterYear)) return;
+    locations.forEach(loc => {
+        if(filterYear !== "all" && !loc.years.includes(filterYear)) return;
 
-    const marker = L.marker([loc.lat, loc.lng], {
-        icon: getIcon(loc.color)
-    }).addTo(map);
+        const marker = L.marker([loc.lat, loc.lng], {
+            icon: getIcon(loc.color)
+        }).addTo(map);
 
-    marker.bindPopup(`
-        <div class="popup-scroll">
-            <b>${loc.name}</b><br><br>
-            📅 ${loc.date}<br>
-            📍 ${loc.place}<br>
-            ⚖ ${loc.type}<br>
-            👥 ${loc.victims}<br>
-            📝 ${loc.description}<br>
-            <a href="${loc.archive}" target="_blank">Архив</a><br><br>
-            <button class="open-modal-btn" data-id="${loc.id}">
-                Узнать больше
-            </button>;
+        marker.bindPopup(`
+            <div class="popup-scroll">
+                <b>${loc.name}</b><br><br>
+                📅 ${loc.date}<br>
+                📍 ${loc.place}<br>
+                ⚖ ${loc.type}<br>
+                👥 ${loc.victims}<br>
+                📝 ${loc.description}<br>
+                <a href="${loc.archive}" target="_blank">Архив</a><br><br>
+                <button class="open-modal-btn" data-id="${loc.id}">
+                    Узнать больше
+                </button>
+            </div>
+        `);
 
-    markers.push(marker);
-});
+        markers.push(marker);
+    });
+}
 
 function openModal(id){
-    const loc=locations.find(l=>l.id===id);
+    const loc = locations.find(l => l.id === id);
 
-    document.getElementById("modal-body").innerHTML=`
+    document.getElementById("modal-body").innerHTML = `
         <h2>${loc.name}</h2>
         <img src="${loc.image}">
         <p><b>Дата:</b> ${loc.date}</p>
@@ -66,16 +71,16 @@ function openModal(id){
         <p><a href="${loc.archive}" target="_blank">Архивные документы</a></p>
     `;
 
-    document.getElementById("modal").style.display="block";
+    document.getElementById("modal").style.display = "block";
 }
 
-document.getElementById("close").onclick=()=>{
-    document.getElementById("modal").style.display="none";
+document.getElementById("close").onclick = () => {
+    document.getElementById("modal").style.display = "none";
 };
 
-window.onclick=(e)=>{
-    if(e.target==document.getElementById("modal")){
-        document.getElementById("modal").style.display="none";
+window.onclick = (e) => {
+    if(e.target == document.getElementById("modal")){
+        document.getElementById("modal").style.display = "none";
     }
 };
 
@@ -85,7 +90,7 @@ function showAll(){ createMarkers("all"); }
 createMarkers("all");
 
 /* МОБИЛЬНОЕ МЕНЮ */
-document.getElementById("menu-toggle").onclick=function(){
+document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
 
