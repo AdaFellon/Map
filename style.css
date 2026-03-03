@@ -106,7 +106,11 @@ body {
   cursor: pointer;
   color: #b30000;
 }
-
+/* ПРОКРУТКА POPUP */
+.leaflet-popup-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
 /* ===== АДАПТИВ ===== */
 @media (max-width: 768px) {
 
