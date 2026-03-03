@@ -132,9 +132,5 @@ body {
   }
   
 }
-.leaflet-popup-content {
-    max-height: 60vh;  /* 60% высоты экрана */
-    overflow-y: auto;
-    width: auto;
-}
+
 }
