@@ -124,13 +124,12 @@ body {
   #sidebar.active {
     transform: translateX(0);
   }
-.leaflet-control-attribution {
+
+  .leaflet-control-attribution {
     display: none !important;
-}
+  }
+
   #menu-toggle {
     display: block;
   }
-  
-}
-
 }
