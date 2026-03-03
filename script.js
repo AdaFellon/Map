@@ -38,9 +38,7 @@ function createMarkers(filterYear="all") {
     locations.forEach(loc => {
         if(filterYear !== "all" && !loc.years.includes(filterYear)) return;
 
-        const marker = L.marker([loc.lat, loc.lng], {
-            icon: getIcon(loc.color)
-        }).addTo(map);
+        const marker = L.marker([loc.lat, loc.lng], { icon: getIcon(loc.color) }).addTo(map);
 
         marker.bindPopup(`
             <div class="popup-scroll">
@@ -51,25 +49,22 @@ function createMarkers(filterYear="all") {
                 👥 ${loc.victims}<br>
                 📝 ${loc.description}<br>
                 <a href="${loc.archive}" target="_blank">Архив</a><br><br>
-                <button class="open-modal-btn" data-id="${loc.id}">
-                    Узнать больше
-                </button>
+                <button class="open-modal-btn" data-id="${loc.id}">Узнать больше</button>
             </div>
         `);
 
-        // Надёжная привязка кнопки после открытия popup
+        // Привязка кнопки после открытия popup
         marker.on('popupopen', (e) => {
-            const popupEl = e.popup.getElement(); // DOM popup
-            const btn = popupEl.querySelector('.open-modal-btn');
+            const popupEl = e.popup.getElement(); // получаем DOM popup
+            const btn = popupEl.querySelector('.open-modal-btn'); // находим кнопку внутри popup
             if(btn){
-                btn.onclick = () => openModal(btn.dataset.id);
+                btn.addEventListener('click', () => openModal(btn.dataset.id));
             }
         });
 
         markers.push(marker);
     });
 
-    // Авто-приближение карты под все маркеры
     if(markers.length > 0){
         const group = L.featureGroup(markers);
         map.fitBounds(group.getBounds().pad(0.2));
