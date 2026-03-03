@@ -47,15 +47,7 @@ function createMarkers(filterYear="all") {
             <a href="${loc.archive}" target="_blank">Архив</a><br><br>
             <button class="open-modal-btn" data-id="${loc.id}">
                 Узнать больше
-            </button>
-        </div>
-    `, { maxWidth: 300 });
-
-    // После добавления popup добавляем слушатель
-    marker.on('popupopen', function() {
-        const btn = document.querySelector('.open-modal-btn[data-id="'+loc.id+'"]');
-        if(btn) btn.onclick = () => openModal(loc.id);
-    });
+            </button>;
 
     markers.push(marker);
 });
