@@ -134,8 +134,9 @@ body {
   #menu-toggle {
     display: block;
   }
-  .leaflet-popup-content {
+  
+}
+.leaflet-popup-content {
     max-height: 300px;   /* высота окна */
     overflow-y: auto;    /* включаем прокрутку */
-}
 }
