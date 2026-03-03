@@ -57,10 +57,11 @@ function createMarkers(filterYear="all") {
             </div>
         `);
 
-        // Событие открытие popup
-        marker.on('popupopen', () => {
-            const btn = document.querySelector('.open-modal-btn');
-            if (btn) {
+        // Надёжная привязка кнопки после открытия popup
+        marker.on('popupopen', (e) => {
+            const popupEl = e.popup.getElement(); // DOM popup
+            const btn = popupEl.querySelector('.open-modal-btn');
+            if(btn){
                 btn.onclick = () => openModal(btn.dataset.id);
             }
         });
