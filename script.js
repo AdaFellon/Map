@@ -36,32 +36,23 @@ function createMarkers(filterYear="all") {
             icon:getIcon(loc.color)
         }).addTo(map);
 
-        marker.bindPopup(`
-            <b>${loc.name}</b><br><br>
-            📅 ${loc.date}<br>
-            📍 ${loc.place}<br>
-            ⚖ ${loc.type}<br>
-            👥 ${loc.victims}<br>
-            📝 ${loc.description}<br>
-            <a href="${loc.archive}" target="_blank">Архив</a><br><br>
-            <button onclick="openModal(${loc.id})"
-            style="background:#b30000;color:white;border:none;
-            padding:6px 10px;border-radius:5px;">
-            Узнать больше</button>
-        `);
-
-        markers.push(marker);
-    });
-    marker.bindPopup(`
+      marker.bindPopup(`
   <div class="popup-scroll">
-    <h3>${loc.name}</h3>
-    <p>${loc.description}</p>
-    <img src="${loc.img}">
+      <b>${loc.name}</b><br><br>
+      📅 ${loc.date}<br>
+      📍 ${loc.place}<br>
+      ⚖ ${loc.type}<br>
+      👥 ${loc.victims}<br>
+      📝 ${loc.description}<br>
+      <a href="${loc.archive}" target="_blank">Архив</a><br><br>
+      <button onclick="openModal(${loc.id})"
+      style="background:#b30000;color:white;border:none;
+      padding:6px 10px;border-radius:5px;">
+      Узнать больше</button>
   </div>
 `, {
   maxWidth: 300
 });
-}
 
 function openModal(id){
     const loc=locations.find(l=>l.id===id);
