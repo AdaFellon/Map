@@ -52,6 +52,15 @@ function createMarkers(filterYear="all") {
 
         markers.push(marker);
     });
+    marker.bindPopup(`
+  <div class="popup-scroll">
+    <h3>${loc.name}</h3>
+    <p>${loc.description}</p>
+    <img src="${loc.img}">
+  </div>
+`, {
+  maxWidth: 300
+});
 }
 
 function openModal(id){
