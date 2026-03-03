@@ -106,6 +106,9 @@ body {
   cursor: pointer;
   color: #b30000;
 }
+.leaflet-control-attribution {
+    display: none !important;
+}
 
 /* ===== АДАПТИВ ===== */
 @media (max-width: 768px) {
