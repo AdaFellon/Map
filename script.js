@@ -30,7 +30,28 @@ function getIcon(color) {
         popupAnchor: [0, -8]
     });
 }
+// script.js
 
+let markers = [];
+
+function getIcon(color) {
+    return L.divIcon({
+        className: '',
+        html: `<div style="
+                background:${color};
+                width:16px;
+                height:16px;
+                border-radius:50%;
+                border:2px solid white;
+                box-shadow:0 0 4px rgba(0,0,0,0.5);
+            "></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -8]
+    });
+}
+
+// === ВСТАВЬТЕ ЗДЕСЬ НОВУЮ ФУНКЦИЮ ===
 function createMarkers(filterYear="all") {
     markers.forEach(m => map.removeLayer(m));
     markers = [];
