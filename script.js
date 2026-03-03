@@ -2,15 +2,14 @@ const map = L.map('map', {
     attributionControl: false
 }).setView([53.5, 27.5], 5);
 
-// Один раз создаём тайл-слой
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '' // пустая строка
+    attribution: '' // убираем надпись
 }).addTo(map);
 
-// После того как карта полностью инициализирована:
+// Удаляем элемент атрибуции, если остался
 map.whenReady(() => {
     const attr = document.querySelector('.leaflet-control-attribution');
-    if (attr) attr.remove(); // удаляем элемент из DOM
+    if (attr) attr.remove();
 });
 
 let markers = [];
@@ -32,7 +31,6 @@ function getIcon(color) {
     });
 }
 
-// === Создание маркеров ===
 function createMarkers(filterYear="all") {
     markers.forEach(m => map.removeLayer(m));
     markers = [];
@@ -61,9 +59,14 @@ function createMarkers(filterYear="all") {
 
         markers.push(marker);
     });
+
+    // Авто-приближение карты под все маркеры
+    if(markers.length > 0){
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.2));
+    }
 }
 
-// === Модальное окно ===
 function openModal(id){
     const loc = locations.find(l => l.id === id);
 
@@ -81,24 +84,22 @@ function openModal(id){
     document.getElementById("modal").style.display = "block";
 }
 
-// Закрытие модалки
 document.getElementById("close").onclick = () => {
     document.getElementById("modal").style.display = "none";
 };
+
 window.onclick = (e) => {
     if(e.target == document.getElementById("modal")){
         document.getElementById("modal").style.display = "none";
     }
 };
 
-// Фильтры
 function filterByYear(year){ createMarkers(year); }
 function showAll(){ createMarkers("all"); }
 
-// === Создаём маркеры при загрузке ===
 createMarkers("all");
 
-// === Мобильное меню ===
+// Мобильное меню
 document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
