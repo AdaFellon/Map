@@ -100,3 +100,9 @@ document.getElementById("menu-toggle").onclick = function(){
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: ''  // убираем надпись
 }).addTo(map);
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('open-modal-btn')) {
+        const id = e.target.dataset.id;
+        openModal(id);
+    }
+});
