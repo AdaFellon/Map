@@ -2,6 +2,7 @@ const map = L.map('map', {
     attributionControl: false
 }).setView([53.5, 27.5], 5);
 
+// Один раз создаём тайл-слой
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '' // пустая строка
 }).addTo(map);
@@ -11,26 +12,6 @@ map.whenReady(() => {
     const attr = document.querySelector('.leaflet-control-attribution');
     if (attr) attr.remove(); // удаляем элемент из DOM
 });
-
-function getIcon(color) {
-    return L.divIcon({
-        className: '',
-        html: `
-            <div style="
-                background:${color};
-                width:16px;
-                height:16px;
-                border-radius:50%;
-                border:2px solid white;
-                box-shadow:0 0 4px rgba(0,0,0,0.5);
-            "></div>
-        `,
-        iconSize: [16, 16],
-        iconAnchor: [8, 8],
-        popupAnchor: [0, -8]
-    });
-}
-// script.js
 
 let markers = [];
 
@@ -51,7 +32,7 @@ function getIcon(color) {
     });
 }
 
-// === ВСТАВЬТЕ ЗДЕСЬ НОВУЮ ФУНКЦИЮ ===
+// === Создание маркеров ===
 function createMarkers(filterYear="all") {
     markers.forEach(m => map.removeLayer(m));
     markers = [];
@@ -82,6 +63,7 @@ function createMarkers(filterYear="all") {
     });
 }
 
+// === Модальное окно ===
 function openModal(id){
     const loc = locations.find(l => l.id === id);
 
@@ -99,28 +81,29 @@ function openModal(id){
     document.getElementById("modal").style.display = "block";
 }
 
+// Закрытие модалки
 document.getElementById("close").onclick = () => {
     document.getElementById("modal").style.display = "none";
 };
-
 window.onclick = (e) => {
     if(e.target == document.getElementById("modal")){
         document.getElementById("modal").style.display = "none";
     }
 };
 
+// Фильтры
 function filterByYear(year){ createMarkers(year); }
 function showAll(){ createMarkers("all"); }
 
+// === Создаём маркеры при загрузке ===
 createMarkers("all");
 
-/* МОБИЛЬНОЕ МЕНЮ */
+// === Мобильное меню ===
 document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: ''  // убираем надпись
-}).addTo(map);
+
+// Делегирование клика на кнопки "Узнать больше"
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('open-modal-btn')) {
         const id = e.target.dataset.id;
