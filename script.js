@@ -57,6 +57,14 @@ function createMarkers(filterYear="all") {
             </div>
         `);
 
+        // Событие открытие popup
+        marker.on('popupopen', () => {
+            const btn = document.querySelector('.open-modal-btn');
+            if (btn) {
+                btn.onclick = () => openModal(btn.dataset.id);
+            }
+        });
+
         markers.push(marker);
     });
 
