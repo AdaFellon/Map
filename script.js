@@ -94,6 +94,3 @@ document.getElementById("menu-toggle").onclick = function(){
     document.getElementById("sidebar").classList.toggle("active");
 };
 
-L.control.attribution({
-    position: 'bottomright'
-}).addTo(map).addAttribution('&copy; OpenStreetMap contributors');
